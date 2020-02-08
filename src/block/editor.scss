@@ -1,0 +1,13 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-wpdevam-block-wpdevam-global-block  {
+	margin: 0 auto;
+	.components-base-control__label {
+		display: block;
+	}
+}
