@@ -1,1 +1,16 @@
-.wp-block-wpdevam-block-wpdevam-global-block{margin:0 auto}.wp-block-wpdevam-block-wpdevam-global-block .components-base-control__label{display:block}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-gbint-block-chr-global-block {
+  margin: 0 auto; }
+  .wp-block-gbint-block-chr-global-block .components-base-control__label {
+    display: block; }

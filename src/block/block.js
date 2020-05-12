@@ -1,5 +1,5 @@
 /**
- * BLOCK: wpdevam-global-block
+ * BLOCK: global-block-integrator
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -13,10 +13,10 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { SelectControl } = wp.components;
 
-const theBlockInfo = wpdevamGlobal.globalBlocks;
-const isGlobalBlockAvailable = wpdevamGlobal.isGlobalBlockAvailable;
+const theBlockInfo = chrGlobal.globalBlocks;
+const isGlobalBlockAvailable = chrGlobal.isGlobalBlockAvailable;
 
-const WPDEVAMSelector = ( props ) => {
+const CHRSelector = ( props ) => {
 	if ( isGlobalBlockAvailable === '1' ) {
 		return (
 			<div className={ props.className }>
@@ -54,14 +54,15 @@ const WPDEVAMSelector = ( props ) => {
  *                             registered; otherwise `undefined`.
  */
 
-registerBlockType( 'wpdevam/block-wpdevam-global-block', {
+registerBlockType( 'gbint/block-chr-global-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'WPDEVAM Global Block' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	title: __( 'Global Block Integrator' ), // Block title.
+	icon: 'layout', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'WPDEVAM Global Block' ),
+		__( 'Global Block Integrator' ),
 		__( 'Themeco Global Block' ),
+		__( 'Global Block' ),
 		__( 'Cornerstone' ),
 		__( 'Pro' ),
 	],
@@ -85,17 +86,11 @@ registerBlockType( 'wpdevam/block-wpdevam-global-block', {
 	// The "edit" property must be a valid function.
 	edit: function( props ) {
 		return (
-			<WPDEVAMSelector { ...props } />
+			<CHRSelector { ...props } />
 		);
 	},
 
 	// The "save" property must be specified and must be a valid function.
-	// save: function( props ) {
-	// 	const theShortcode = '[cs_gb id=' + props.attributes.selectedBlock + ']';
-	// 	return (
-	// 		<RawHTML>{ theShortcode }</RawHTML>
-	// 	);
-	// },
 	save: () => {
 		return null;
 	},

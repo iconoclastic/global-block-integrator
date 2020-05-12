@@ -5,7 +5,7 @@
  * Enqueue CSS/JS of all the blocks.
  *
  * @since   1.0.0
- * @package WPDEVAM
+ * @package GBINT
  */
 
 // Exit if accessed directly.
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @uses {wp-editor} for WP editor styles.
  * @since 1.0.0
  */
-function wpdevam_global_block_cgb_block_assets() { // phpcs:ignore
+function chr_global_block_assets() { // phpcs:ignore
 
 	$is_global_block_available = 0;
 	if ( post_type_exists( 'cs_global_block' ) ) {
@@ -45,36 +45,36 @@ function wpdevam_global_block_cgb_block_assets() { // phpcs:ignore
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'wpdevam/block-wpdevam-global-block', array(
+		'gbint/block-chr-global-block', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
-			'style'         => 'wpdevam_global_block-cgb-style-css',
+			'style'         => 'chr_global_block-style-css',
 			// Enqueue blocks.build.js in the editor only.
-			'editor_script' => 'wpdevam_global_block-cgb-block-js',
+			'editor_script' => 'chr_global_block-js',
 			// Enqueue blocks.editor.build.css in the editor only.
-			'editor_style'  => 'wpdevam_global_block-cgb-block-editor-css',
-			'render_callback' => 'wpdevam_global_block_dynamic_render_callback'
+			'editor_style'  => 'chr_global_block-editor-css',
+			'render_callback' => 'chr_global_block_dynamic_render_callback'
 		)
 	);
 
-	$wpdevam_args = array(
+	$chr_args = array(
 		'post_type' 	=> 'cs_global_block',
 		'post_status'	=> 'tco-data'
 	);
-	$wpdevam_global_block_query = new WP_Query( $wpdevam_args );
-	$wpdevam_result = [];
+	$chr_global_block_query = new WP_Query( $chr_args );
+	$chr_result = [];
 
-	if ( $wpdevam_global_block_query->have_posts() ) {
-		array_push( $wpdevam_result, array('value' => '-1', 'label' => 'Select the Global Block...') );
-		while ( $wpdevam_global_block_query->have_posts() ) {
-			$wpdevam_global_block_query->the_post();
-			array_push( $wpdevam_result, array( 'value' => get_the_ID(), 'label' => get_the_title() ) );
+	if ( $chr_global_block_query->have_posts() ) {
+		array_push( $chr_result, array('value' => '-1', 'label' => 'Select the Global Block...') );
+		while ( $chr_global_block_query->have_posts() ) {
+			$chr_global_block_query->the_post();
+			array_push( $chr_result, array( 'value' => get_the_ID(), 'label' => get_the_title() ) );
 		}
 	}
 	wp_reset_postdata();
 
 	// Register block styles for both frontend + backend.
 	wp_register_style(
-		'wpdevam_global_block-cgb-style-css', // Handle.
+		'chr_global_block-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
 		array( 'wp-editor' ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
@@ -82,7 +82,7 @@ function wpdevam_global_block_cgb_block_assets() { // phpcs:ignore
 
 	// Register block editor script for backend.
 	wp_register_script(
-		'wpdevam_global_block-cgb-block-js', // Handle.
+		'chr_global_block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-compose' ), // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
@@ -91,24 +91,24 @@ function wpdevam_global_block_cgb_block_assets() { // phpcs:ignore
 
 	// Register block editor styles for backend.
 	wp_register_style(
-		'wpdevam_global_block-cgb-block-editor-css', // Handle.
+		'chr_global_block-editor-css', // Handle.
 		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
 	);
 
 	wp_localize_script(
-		'wpdevam_global_block-cgb-block-js',
-		'wpdevamGlobal', // Array containing dynamic data for a JS Global.
+		'chr_global_block-js',
+		'chrGlobal', // Array containing dynamic data for a JS Global.
 		[
 			'pluginDirPath' 			=> plugin_dir_path( __DIR__ ),
 			'pluginDirUrl'  			=> plugin_dir_url( __DIR__ ),
-			'globalBlocks'				=> $wpdevam_result,
+			'globalBlocks'				=> $chr_result,
 			'isGlobalBlockAvailable'	=> $is_global_block_available
 		]
 	);
 
-	function wpdevam_global_block_dynamic_render_callback($attributes) {
+	function chr_global_block_dynamic_render_callback($attributes) {
 		ob_start(); // Turn on output buffering
 
 		if ( post_type_exists( 'cs_global_block' ) ) {
@@ -134,5 +134,5 @@ function wpdevam_global_block_cgb_block_assets() { // phpcs:ignore
 }
 
 // Hook: Block assets.
-add_action( 'init', 'wpdevam_global_block_cgb_block_assets' );
+add_action( 'init', 'chr_global_block_assets' );
 
